@@ -7,12 +7,12 @@ from ina219 import INA219, DeviceRangeError
 from ubidots import ApiClient
 
 # Replace with your actual Ubidots token and variable IDs
-UBIDOTS_TOKEN = "BBFF-kI04ByO0WPypcX0xmo414H7w8cRQrS"
-POWER_INPUT_VAR_ID = "64d44f836096e5000e1307fa"
-MODE_VAR_ID = "64e02fef8408ac000e20c2c4"
-POWER_OUTPUT_VAR_ID = "64d44f4fab3ca3000c1a85d4"
-SWITCHING_VAR_ID = "64d44fb7d092cf000bd6ba28"
-BATTERY_VAR_ID = "64d44fdeab3ca3000c1a85d5"
+UBIDOTS_TOKEN = ""
+POWER_INPUT_VAR_ID = ""
+MODE_VAR_ID = ""
+POWER_OUTPUT_VAR_ID = ""
+SWITCHING_VAR_ID = ""
+BATTERY_VAR_ID = ""
 
 # Initialize Ubidots API client
 api = ApiClient(token=UBIDOTS_TOKEN)
