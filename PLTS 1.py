@@ -7,19 +7,20 @@ from ina219 import INA219, DeviceRangeError
 from ubidots import ApiClient
 
 # Replace with your actual Ubidots token and variable IDs
-UBIDOTS_TOKEN = "YOUR_UBIDOTS_TOKEN"
-POWER_INPUT_VAR_ID = "YOUR_POWER_INPUT_VARIABLE_ID"
-MODE_VAR_ID = "YOUR_MODE_VARIABLE_ID"
-POWER_OUTPUT_VAR_ID = "YOUR_POWER_OUTPUT_VARIABLE_ID"
-SWITCHING_VAR_ID = "YOUR_SWITCHING_VARIABLE_ID"
-BATTERY_VAR_ID = "YOUR_BATTERY_VARIABLE_ID"
+UBIDOTS_TOKEN = "BBFF-kI04ByO0WPypcX0xmo414H7w8cRQrS"
+POWER_INPUT_VAR_ID = "64d44f836096e5000e1307fa"
+MODE_VAR_ID = "64e02fef8408ac000e20c2c4"
+POWER_OUTPUT_VAR_ID = "64d44f4fab3ca3000c1a85d4"
+SWITCHING_VAR_ID = "64d44fb7d092cf000bd6ba28"
+BATTERY_VAR_ID = "64d44fdeab3ca3000c1a85d5"
 
 # Initialize Ubidots API client
 api = ApiClient(token=UBIDOTS_TOKEN)
 
 # Initialize GPIOZero MockFactory and Devices for MCP3008
 Device.pin_factory = MockFactory()
-adc = MCP3008(channel=0)
+adc_SCT013 = MCP3008(channel=1)
+adc_battery = MCP3008(channel=0)
 
 # Initialize INA219 for solar panel monitoring
 SHUNT_OHMS = 0.1  # Shunt resistor value in ohms
@@ -33,7 +34,7 @@ relay_pln = LED(18)  # Replace with actual pin number
 # Function to read current from SCT013 sensor
 def read_current():
     try:
-        voltage = adc.value * 3.3
+        voltage = adc_SCT013.value * 3.3
         current = (voltage - 2.5) / 0.066  # Calibration factor for 100/50 mA SCT013
         return current
     except Exception as e:
@@ -54,7 +55,7 @@ def read_solar_power():
 # Function to read battery percentage
 def read_battery_percentage():
     try:
-        voltage = adc.value * 3.3 * 5  # Voltage divider ratio 1:5
+        voltage = adc_battery.value * 3.3 * 5  # Voltage divider ratio 1:5
         battery_percentage = (voltage - 11.2) / (14.2 - 11.2) * 100
         return max(0, min(100, battery_percentage))
     except Exception as e:
